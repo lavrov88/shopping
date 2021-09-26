@@ -1,0 +1,48 @@
+body.dark {
+    background-color: #000;
+}
+
+body, body * {
+    transition: background-color 0.1s linear, color 0.1s linear;
+}
+
+body.dark .shopping_list_container {
+    background-color: #292929;
+    background: linear-gradient(to bottom, #5f5f5f, #111111);
+}
+
+body.dark .main {
+    background-color: #0000001e;
+}
+
+/* body.dark .category_item {
+    border-color: #5b7fb4
+} */
+
+body.dark .category_header {
+    background-color: #5b7fb4;
+    color: #fff;
+}
+
+body.dark .options_list {
+    background-color: #646464;
+    border-color: #3b3b3b;
+}
+
+body.dark .options_list__item {
+    color: #fff;
+}
+
+body.dark .options_list__item:hover {
+    background-color: #8d8d8d;
+}
+
+/* COLORS FOR CATEGORIES */
+
+body.dark .category_item.orange {
+    border-color: #d36600;
+}
+body.dark .category_item.orange .category_header {
+    background-color: #d36600;
+    color: #fff;
+}

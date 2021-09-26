@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dark.css">
+    <title>Shopping list</title>
+</head>
+<body>
+    <div class="shopping_list_container">
+        <header class="header">
+            <div class="header_logo">
+                <h1>Efficient shopping list</h1>
+            </div>
+            <div class="header_menu">
+                <button class="header_menu__button">&#10247</button>
+            </div>
+            <ul class ="options_list header_options_menu">
+                <li class="options_list__item manage_lists">Manage lists</li>
+                <li class="options_list__item switch_theme">Switch theme</li>
+                <li class="options_list__item options">Options</li>
+            </ul>
+        </header>
+        <main class="main">
+            <div class="categories">
+                <ul id="categories">Categories</ul>
+            </div>
+            <div class="add_new_items">
+                <button class="add_goods_btn">Add new goods</button>
+            </div>
+        </main>
+
+        <!-- POP UP MENUS -->
+
+        <div class="modal_wrapper add_goods_wrapper">
+            <div class="modal_popup add_goods_popup">
+                <div class="add_goods_popup_header">
+                    <div class="add_goods_popup_header_left">
+                        <p>Enter goods and click to a list, for which to add them in</p>
+                    </div>
+                    <div class="add_goods_popup_header_right"></div>
+                </div>
+                <div class="add_goods_input">
+                    <textarea id="new_goods_textarea" placeholder="New goods separated by commas"></textarea>
+                    <div class="add_goods_input__clear_btn_wrapper">
+                        <div class="add_goods_input__clear_btn"></div>
+                    </div>
+                </div>
+                <div class="add_goods_buttons"></div>
+                <div class="add_goods_bottom">
+                    <button class="add_goods__cancel_btn">Back to lists</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="manage_lists" class="modal_wrapper manage_lists_wrapper">
+            <div class="modal_popup list_options_popup">
+                <div class="manage_lists_popup__header">
+                    <div class="manage_lists_popup__header__left">
+                        <h2>Manage lists</h2>
+                    </div>
+                    <div class="manage_lists_popup__header__right">
+                        <button id="add_new_list_btn" class="add_new_list_btn">
+                            <div class="add_new_list_btn_plus">+</div>
+                            <div class="add_new_list_btn_text">Add new list</div>
+                        </button>
+                    </div>
+                </div>
+                <div class="list_options_popup__items">OPTIONS</div>
+                <div class="list_options_popup__footer">
+                    <button class="add_goods__cancel_btn cancel_btn">Cancel</button>
+                    <button class="add_goods__cancel_btn accept_btn">Accept</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="list_options" class="modal_wrapper list_options_wrapper">
+            <div class="modal_popup list_options_popup">
+                <div class="list_options_popup__header"></div>
+                <div class="list_options_popup__items"></div>
+                <div class="list_options_popup__footer">
+                    <button class="add_goods__cancel_btn cancel_btn">Cancel</button>
+                    <button class="add_goods__cancel_btn accept_btn">Accept</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="confirm_delete" class="modal_wrapper confirm_delete_wrapper">
+            <div class="modal_popup confirm_delete_popup">
+                <div class="confirm_delete_popup__message">
+                    <p></p>
+                </div>
+                <div class="confirm_delete_popup__buttons">
+                    <button class="confirm_delete_popup__yes_btn">Yes</button>
+                    <button class="confirm_delete_popup__no_btn">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="state.js"></script>
+    <script src="add_goods_menu.js"></script>
+    <script src="list_options.js"></script>
+    <script src="manage_lists.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
