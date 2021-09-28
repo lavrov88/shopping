@@ -45,6 +45,24 @@ function openManageListsMenu() {
         manageListsItemsElement.querySelectorAll('.manage_lists__item__right').forEach(el => {
             el.addEventListener('click', deleteList)
         });
+
+        const dataObj = {
+            temporaryList: temporaryList,
+            wrapper: popupWrapper,
+            dragBtnSelector: '.manage_lists__item__left',
+            dragElementSelector: '.manage_lists__item',
+            dragZoneSelector: '.list_options_popup__items',
+            edgeHeight: 90,
+            // sortFunction: sortBoughtItems,
+            updateTemporaryList: updateTemporary,
+            rerenderFunction: rerenderListsItems
+        }
+
+        addDragAndDrop(dataObj);
+    }
+
+    function updateTemporary(list) {
+        temporaryList = [...list];
     }
 
     function returnManageListsItem({name, listId, color}) {
@@ -161,14 +179,19 @@ function openManageListsMenu() {
         }
 
         function sortListsInState() {
-            
+            let sortedLists = [];
+            for (let i = 0; i < temporaryList.length; i++) {
+                const listIndex = state.lists.findIndex(list => list.listId === temporaryList[i].listId);
+                sortedLists.push(state.lists[listIndex]);
+            }
+            state.lists = [...sortedLists];
         }
 
         function showNewListsMessage(lists) {
             if (lists.length === 1) {
-                console.log(`list ${lists[0]} is not visible now because it hasn't items yet`);
+                console.log(`list ${lists[0]} added, but is not visible now because it hasn't items yet`);
             } else if (lists.length > 1) {
-                console.log(`new lists are not visible now because they haven't items yet`);
+                console.log(`new lists added, but are not visible now because they haven't items yet`);
             }
         }
     }
