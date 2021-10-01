@@ -167,6 +167,7 @@ function openManageListsMenu() {
         popupWrapper.style.display = 'none';
         cancelBtn.addEventListener('click', closeManageListsMenu);
         acceptBtn.removeEventListener('click', acceptChanges);
+        state.writeToLocalStorage();
         initialRender();
         showNewListsMessage(newLists);
 

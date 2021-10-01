@@ -51,7 +51,7 @@ ul {
     align-items: center;
     margin: 0 auto;
     margin-bottom: 10px;
-    padding: 0 10px;
+    padding: 0 15px;
 
     color: #fff;
     text-align: center;
@@ -140,7 +140,7 @@ ul {
     border-radius: 8px;
     min-height: 80px;
     
-    background-color: #fff;
+    /* background-color: #fff; */
 }
 
 /* LISTS */
@@ -169,6 +169,8 @@ ul {
     display: flex;
     flex-wrap: wrap;
     padding: 5px 0 0;
+
+    background-color: #ffffffc9;
 }
 
 /* LISTS MENU */
@@ -225,6 +227,10 @@ ul {
     background-color:#4f6c97;
     color: #fff;
     cursor: pointer;
+}
+
+.good_element:hover {
+    opacity: 0.7;
 }
 
 .good_element.bought {
@@ -310,11 +316,12 @@ ul {
 .manage_lists__item.yellow,
 .good_element.edit.yellow,
 .colored_square.yellow {
-    background-color: #ffe600;
+    background-color: #e7d000;
     color: #000;
 }
 .category_item.yellow .category_header {
     background-color: #ffee55;
+    color: #000;
 }
 .category_item.yellow .good_element.bought,
 .good_element.edit.yellow.bought {
@@ -323,6 +330,27 @@ ul {
 }
 .category_item.yellow {
     border-color: #ffee55;
+}
+
+/* ADD GOODS BUTTONS COLORS */
+.add_goods_button.orange {
+    background-color: #ff7b00;
+}
+.add_goods_button.green {
+    background-color: #15c505;
+}
+.add_goods_button.blue {
+    background-color: #4f6c97;
+}
+.add_goods_button.purple {
+    background-color: #800080;
+}
+.add_goods_button.red {
+    background-color: #eb0000;
+}
+.add_goods_button.yellow {
+    background-color: #e7d000;
+    color: #000;
 }
 
 /* ADD NEW GOODS BUTTON */
@@ -373,6 +401,21 @@ ul {
     width: 100%;
     border-radius: 5px;
     padding: 10px;
+    padding-bottom: 15px;
+}
+
+/* CONFIRM DELETE MODAL */
+
+.confirm_delete_popup__message {
+    margin: 5px 10px 20px;
+}
+
+.confirm_delete_popup__buttons {
+    display: flex;
+}
+.confirm_delete_popup__buttons button {
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 /* ADD GOODS MENU */
@@ -465,6 +508,7 @@ ul {
 .add_goods_button {
     display: block;
     flex-grow: 1;
+    min-width: 22%;
     margin: 0 5px 5px;
     padding: 6px 10px;
     border: none;
@@ -500,14 +544,7 @@ ul {
     color: #3b3b3b;
 }
 
-/* ADD GOODS BUTTONS COLORS */
 
-.add_goods_button.orange {
-    background-color: rgb(255, 123, 0);
-}
-.add_goods_button.green {
-    background-color: #15c505;
-}
 
 
 /* LIST OPTIONS POPUP */
@@ -570,9 +607,29 @@ ul {
 .good_element__left, .good_element__right {
     width: 12%;
     height: 100%;
+    position: relative;
 
     text-decoration-line: none;
     font-weight: 500;
+}
+
+.move_up_btn, .move_down_btn {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    top: 0;
+    z-index: 500;
+
+    cursor: pointer;
+}
+
+.move_up_btn {
+    left: 0;
+}
+
+.move_down_btn {
+    right: 0;
 }
 
 .good_element__left {
@@ -602,6 +659,7 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
     margin-bottom: 15px;
 }
 
@@ -635,7 +693,7 @@ ul {
 .manage_lists__item {
     display: flex;
     width: 100%;
-    margin: 5px 0;
+    margin: 10px 0;
     border-radius: 6px;
     justify-content: center;
     align-items: center;

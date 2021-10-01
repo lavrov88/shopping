@@ -67,5 +67,6 @@ function acceptNewGoodToList(event) {
 
     document.querySelector('#new_goods_textarea').value = '';
     closeAddGoodMenu();
+    state.writeToLocalStorage();
     initialRender();
 }

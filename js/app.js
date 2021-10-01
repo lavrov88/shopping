@@ -24,6 +24,7 @@ let delayTimerId;
 
 // RENDER
 
+state.readFromLocalStorage();
 initialRender();
 
 function initialRender() {
@@ -34,8 +35,13 @@ function initialRender() {
         sortBoughtItems(list.items);
         listsInner += returnList(list);
     });
-
     shoppingLists.innerHTML = listsInner;
+
+    if (state.options.darkTheme) {
+        document.body.classList.add('dark');
+    } else {
+        document.body.classList.remove('dark');
+    }
 }
 
 // HEADER
@@ -58,7 +64,14 @@ function openHeaderMenu() {
 }
 
 function switchTheme() {
-    document.body.classList.toggle('dark');
+    //document.body.classList.toggle('dark');
+    if (state.options.darkTheme) {
+        state.options.darkTheme = false;
+    } else {
+        state.options.darkTheme = true;
+    }
+    state.writeToLocalStorage();
+    initialRender();
 }
 
 // GOODS LISTS
@@ -75,6 +88,7 @@ function toggleBought(element) {
     } else {state.lists[listIndex].items[goodIndex].bought = false}
 
     element.classList.toggle('bought');
+    state.writeToLocalStorage();
     sortAfterDelay();
 }
 
@@ -162,11 +176,10 @@ function openListMenu(element) {
     }, 10);
 }
 
-// LIST OPTIONS MENU
-
 function deleteCrossedBtn(target) {
     let listId = target.closest('.category_item').id;
     state.deleteCrossedInList(listId);
+    state.writeToLocalStorage();
     initialRender();
 }
 
@@ -176,18 +189,19 @@ function deleteAllBtn(target) {
 }
 
 function openDeleteAllConfirmation(listId) {
-    let confirmWindow = document.querySelector('#confirm_delete');
-    let listIndex = state.findListIndex(listId);
-    let listName = state.lists[listIndex].name;
+    const confirmWindow = document.querySelector('#confirm_delete');
+    const listIndex = state.findListIndex(listId);
+    const listName = state.lists[listIndex].name;
 
-    confirmWindow.querySelector('.confirm_delete_popup__yes_btn').addEventListener('click', confirmDelete);
-    confirmWindow.querySelector('.confirm_delete_popup__no_btn').addEventListener('click', cancelDelete);
+    confirmWindow.querySelector('.accept_btn').addEventListener('click', confirmDelete);
+    confirmWindow.querySelector('.cancel_btn').addEventListener('click', cancelDelete);
     
     confirmWindow.querySelector('.confirm_delete_popup__message p').innerHTML = 'Are you sure you want to delete <strong>all</strong> goods in list "' + listName + '"?';
     confirmWindow.style.display = 'flex';
 
     function confirmDelete() {
         state.deleteAllInList(listId);
+        state.writeToLocalStorage();
         closeAndRerender();
     }
 
@@ -196,8 +210,8 @@ function openDeleteAllConfirmation(listId) {
     }
 
     function closeAndRerender() {
-        confirmWindow.querySelector('.confirm_delete_popup__yes_btn').removeEventListener('click', confirmDelete);
-        confirmWindow.querySelector('.confirm_delete_popup__yes_btn').removeEventListener('click', confirmDelete);
+        confirmWindow.querySelector('.accept_btn').removeEventListener('click', confirmDelete);
+        confirmWindow.querySelector('.cancel_btn').removeEventListener('click', confirmDelete);
         confirmWindow.style.display = 'none';
         initialRender();
     }

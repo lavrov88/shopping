@@ -24,7 +24,11 @@ function openListOptions(target) {
         temporaryList.forEach(good => {
             htmlItems += `
                 <li id=${good.id} class="good_element edit${good.bought ? ' bought' : ''} ${state.lists[listIndex].color}">
-                    <div class="good_element__left">&#8691</div>
+                    <div class="good_element__left">
+                        <div class="move_up_down_btn">&#8691</div>
+                        <div class="move_up_btn">&#9650</div>
+                        <div class="move_down_btn">&#9660</div>
+                    </div>
                     <div class="good_element__center">${good.name}</div>
                     <div class="good_element__right">&#215</div>
                 </li>
@@ -46,7 +50,7 @@ function openListOptions(target) {
         const dataObj = {
             temporaryList: temporaryList,
             wrapper: optionsWrapper,
-            dragBtnSelector: '.good_element__left',
+            dragBtnSelector: '.move_up_down_btn',
             dragElementSelector: '.good_element',
             dragZoneSelector: '.list_options_popup__items > ul',
             edgeHeight: 60,
@@ -75,6 +79,7 @@ function openListOptions(target) {
     function acceptChanges() {
         state.lists[listIndex].items = [...temporaryList];
         closeListOptions();
+        state.writeToLocalStorage();
         initialRender();
     }
 }

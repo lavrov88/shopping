@@ -38,6 +38,10 @@ const state = {
 
     listColors: ['orange', 'green', 'blue', 'purple', 'red', 'yellow'],
 
+    options: {
+        darkTheme: false
+    },
+
     findListIndex(listId) {
         return this.lists.findIndex(list => list.listId === listId);
     },
@@ -50,5 +54,21 @@ const state = {
     deleteAllInList(listId) {
         let listIndex = this.findListIndex(listId);
         this.lists[listIndex].items = [];
+    },
+
+    writeToLocalStorage() {
+        localStorage.setItem('lists', JSON.stringify(state.lists));
+        localStorage.setItem('options', JSON.stringify(state.options));
+    },
+
+    readFromLocalStorage() {
+        if (localStorage.getItem('lists')) {
+            const lists = JSON.parse(localStorage.getItem('lists'));
+            state.lists = [...lists];
+        }
+        if (localStorage.getItem('options')) {
+            const options = JSON.parse(localStorage.getItem('options'));
+            state.options = {...options};
+        }
     }
 };

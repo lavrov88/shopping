@@ -1,0 +1,92 @@
+@media (max-width: 500px) {
+    html {
+        font-size: 18px;
+    }
+
+    .shopping_list_container {
+        margin-top: 0px;
+        padding: 20px 5px;
+        height: 100vh;
+        border-radius: 0px;
+        position: relative;
+    }
+
+    .main {
+        padding: 15px 5px;
+    }
+
+    .header_logo h1 {
+        font-size: 28px;
+    }
+
+    .categories {
+        padding-bottom: 40px;
+    }
+
+    .add_new_items {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+
+        background-color: #fff;
+    }
+
+    /* MODAL */
+
+    .add_goods_popup {
+        transition-duration: 0.4s;
+    }
+
+    .modal_wrapper {
+        padding: 5px;
+        padding-top: 20px;
+    }
+
+    .list_options_popup {
+        width: 95%;
+    }
+
+    .add_goods_popup_header_left {
+        font-size: 13px;
+    }
+
+    .add_goods_input, .add_goods_button, .add_goods__cancel_btn {
+        font-size: 18px;
+    }
+
+    /* LIST EDIT */
+
+    .good_element__left {
+        width: 18%;
+        cursor: auto;
+    }
+
+    .move_up_down_btn {
+        opacity: 0;
+    }
+
+    .move_up_btn, .move_down_btn {
+        display: block;
+    }
+
+}
+
+@media (max-width: 450px) {
+    .header_logo h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 380px) {
+    .header_logo h1 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 300px) {
+    .header_logo h1 {
+        display: none;
+    }
+}
