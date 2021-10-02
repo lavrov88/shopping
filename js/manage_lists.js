@@ -39,17 +39,28 @@ function openManageListsMenu() {
         manageListsItemsElement.querySelectorAll('.manage_lists__item__name input').forEach(el => {
             el.addEventListener('input', onChangeName);
         });
-        manageListsItemsElement.querySelectorAll('.manage_lists__item__colors').forEach(el => {
-            el.addEventListener('click', changeListColor);
-        });
-        manageListsItemsElement.querySelectorAll('.manage_lists__item__right').forEach(el => {
-            el.addEventListener('click', deleteList)
-        });
+        manageListsItemsElement.addEventListener('click', addControlBtns);
+        
+        function addControlBtns(event) {
+            if (event.target.classList.contains('colored_square')) {
+                changeListColor(event);
+            } else if (event.target.classList.contains('manage_lists__item__right') || event.target.classList.contains('cross')) {
+                deleteList(event);
+            } else if (event.target.classList.contains('manage_lists__move_up_btn') || event.target.classList.contains('arrow_up')) {
+                temporaryList = [...replaceElementByBtn(event, 'up', temporaryList)];
+                rerenderListsItems();
+            } else if (event.target.classList.contains('manage_lists__move_down_btn') || event.target.classList.contains('arrow_down')) {
+                temporaryList = [...replaceElementByBtn(event, 'down', temporaryList)];
+                rerenderListsItems();
+            }
+            
+            manageListsItemsElement.removeEventListener('click', addControlBtns);
+        }
 
         const dataObj = {
             temporaryList: temporaryList,
             wrapper: popupWrapper,
-            dragBtnSelector: '.manage_lists__item__left',
+            dragBtnSelector: '.move_up_down_btn',
             dragElementSelector: '.manage_lists__item',
             dragZoneSelector: '.list_options_popup__items',
             edgeHeight: 90,
@@ -68,7 +79,17 @@ function openManageListsMenu() {
     function returnManageListsItem({name, listId, color}) {
         return `
         <li id="${listId}" class="manage_lists__item ${color}">
-            <div class="manage_lists__item__left">⇳</div>
+            <div class="manage_lists__item__left">
+                <div class="move_up_down_btn">
+                    <div class="arrow">&#8691</div>
+                </div>
+                <div class="manage_lists__move_up_btn">
+                    <div class="arrow_up">&#9650</div>
+                </div>
+                <div class="manage_lists__move_down_btn">
+                    <div class="arrow_down">&#9660</div>
+                </div>
+            </div>
             <div class="manage_lists__item__center">
                 <div class="manage_lists__item__name">
                     <input value=${name}></input>
@@ -77,7 +98,9 @@ function openManageListsMenu() {
                     ${returnColorsPalette(state.listColors, color)}
                 </ul>
             </div>
-            <div class="manage_lists__item__right">×</div>
+            <div class="manage_lists__item__right">
+                 <div class="cross">×</div>
+            </div>
         </li>
         `
     }
@@ -115,6 +138,10 @@ function openManageListsMenu() {
         const listId = event.target.closest('.manage_lists__item').id;
         const listIndex = temporaryList.findIndex(item => '' + item.listId === listId);
         temporaryList[listIndex].name = newValue;
+
+        manageListsItemsElement.querySelectorAll('.manage_lists__item__name input').forEach(el => {
+            el.removeEventListener('input', onChangeName);
+        });
         rerenderListsItems();
         
         manageListsItemsElement.querySelectorAll('.manage_lists__item').forEach(item => {
@@ -165,7 +192,7 @@ function openManageListsMenu() {
         sortListsInState();
 
         popupWrapper.style.display = 'none';
-        cancelBtn.addEventListener('click', closeManageListsMenu);
+        cancelBtn.removeEventListener('click', closeManageListsMenu);
         acceptBtn.removeEventListener('click', acceptChanges);
         state.writeToLocalStorage();
         initialRender();

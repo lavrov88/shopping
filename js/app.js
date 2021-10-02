@@ -116,6 +116,7 @@ function deleteDelayAnimations() {
 }
 
 function sortBoughtItems(list) {
+    if (!list) return;
     return list.sort((a, b) => {
         if (a.bought < b.bought) return -1;
         if (a.bought > b.bought) return 1;
@@ -131,6 +132,9 @@ function returnItem({id, name, bought}) {
 }
 
 function returnList({name, listId, color, items}) {
+    if (!items) {
+        return '';
+    }
     if (items.length === 0) {
         return '';
     }

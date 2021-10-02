@@ -8,7 +8,6 @@ function openListOptions(target) {
     let optionsWrapper = document.querySelector('#list_options');
     let optionsHeader = optionsWrapper.querySelector('.list_options_popup__header');
     let optionsGoods = optionsWrapper.querySelector('.list_options_popup__items');
-    let deleteBtns;
     let cancelBtn = optionsWrapper.querySelector('.cancel_btn');
     let acceptBtn = optionsWrapper.querySelector('.accept_btn');
 
@@ -42,10 +41,22 @@ function openListOptions(target) {
             </ul>
         `;
 
-        deleteBtns = optionsWrapper.querySelectorAll('.good_element__right');
-        deleteBtns.forEach(btn => {
-            btn.addEventListener('click', deleteItem);
-        });
+        optionsGoods.addEventListener('click', addControlBtns);
+
+        function addControlBtns(event) {
+            if (event.target.classList.contains('move_up_btn')) {
+                temporaryList = [...replaceElementByBtn(event, 'up', temporaryList)];
+            }
+            if (event.target.classList.contains('move_down_btn')) {
+                temporaryList = [...replaceElementByBtn(event, 'down', temporaryList)];
+            }
+            if (event.target.classList.contains('good_element__right')) {
+                deleteItem(event);
+            }
+            optionsGoods.removeEventListener('click', addControlBtns);
+            temporaryList = sortBoughtItems(temporaryList);
+            rerenderList();
+        };
 
         const dataObj = {
             temporaryList: temporaryList,

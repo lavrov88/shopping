@@ -67,8 +67,14 @@
         opacity: 0;
     }
 
-    .move_up_btn, .move_down_btn {
+    .move_up_btn, 
+    .move_down_btn {
         display: block;
+    }
+
+    .manage_lists__move_up_btn,
+    .manage_lists__move_down_btn {
+        display: flex;
     }
 
 }

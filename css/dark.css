@@ -80,7 +80,7 @@ body.dark .manage_lists_popup__header__left {
 }
 
 /* MANAGE LISTS */
-.manage_lists__item__center {
+body.dark .manage_lists__item__center {
     border-left-color: #3f3f3f;
     border-right-color: #3f3f3f;
 }
