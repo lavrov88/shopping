@@ -89,34 +89,3 @@ function addDragAndDrop(dataObj) {
         }
     });
 }
-
-function replaceElementByBtn(event, btnType, inputList) {
-    const elementId = (event.target.closest('.good_element') || event.target.closest('.manage_lists__item')).id;
-    const elementIndex = inputList.findIndex(item => (item.id || item.listId) === elementId);
-    const listLength = inputList.length;
-    let updatedList = [];
-
-    if (btnType === 'up') {
-        if (elementIndex > 0) {
-            updatedList = [
-                ...inputList.slice(0, elementIndex - 1),
-                inputList[elementIndex],
-                ...inputList.slice(elementIndex - 1).filter(item => (item.id || item.listId) !== elementId)
-            ];
-        } else {
-            updatedList = [...inputList];
-        }
-    }
-    if (btnType === 'down') {
-        if (elementIndex < listLength - 1) {
-            updatedList = [
-                ...inputList.slice(0, elementIndex + 2).filter(item => (item.id || item.listId) !== elementId),
-                inputList[elementIndex],
-                ...inputList.slice(elementIndex + 2)
-            ]
-        } else {
-            updatedList = [...inputList];
-        }
-    }
-    return updatedList;
-}

@@ -6,6 +6,8 @@ document.querySelector('.options_list__item.manage_lists').addEventListener('cli
 document.querySelector('#categories').addEventListener('click', (event) => {
     if (event.target.classList.contains('good_element')) {
         toggleBought(event.target);
+    } else if (event.target.classList.contains('category_header_minimize') || event.target.classList.contains('category_header_minimize_arrow')) {
+        minimizeList(event.target);
     } else if (event.target.classList.contains('category_header_menu_button')) {
         openListMenu(event.target);
     } else if (event.target.classList.contains('options_list__item') && event.target.classList.contains('edit')) {
@@ -48,17 +50,24 @@ function initialRender() {
 
 function openHeaderMenu() {
     const menu = document.querySelector('.header_options_menu');
-    const body = document.body;
+    menu.classList.add('transition');
     menu.style.display = 'block';
 
     menu.querySelector('.switch_theme').addEventListener('click', switchTheme)
 
     setTimeout(() => {
+        menu.classList.remove('transition');
         document.body.addEventListener('click', closeHeaderMenu);
 
         function closeHeaderMenu() {
-            menu.style.display = 'none';
+            menu.classList.add('transition');
+            menu.addEventListener('transitionend', displayNone);
             document.body.removeEventListener('click', closeHeaderMenu);
+            function displayNone() {
+                menu.style.display = 'none';
+                menu.classList.remove('transition');
+                menu.removeEventListener('transitionend', displayNone);
+            }
         }
     }, 10);
 }
@@ -124,6 +133,35 @@ function sortBoughtItems(list) {
     });
 }
 
+function minimizeList(target) {
+    const minimizeBtn = target.closest('.category_header_minimize');
+    const targetListElement = minimizeBtn.closest('.category_item');
+    const targetListIndex = state.lists.findIndex(item => item.listId === targetListElement.id);
+    const targetListUl = targetListElement.querySelector('.category_items');
+    
+    if (state.lists[targetListIndex].minimized) {
+        state.lists[targetListIndex].minimized = false;
+        targetListUl.style.height = targetListUl.scrollHeight + 'px';
+        targetListUl.addEventListener('transitionend', clearHeight);
+
+        function clearHeight() {
+            targetListUl.style.height = '';
+            targetListUl.classList.remove('minimized');
+            minimizeBtn.classList.remove('minimized');
+            targetListUl.removeEventListener('transitionend', clearHeight);
+        }
+    } else {
+        state.lists[targetListIndex].minimized = true;
+        targetListUl.style.height = targetListUl.scrollHeight + 'px';
+        targetListUl.classList.add('minimized');
+        minimizeBtn.classList.add('minimized');
+        setTimeout(() => {
+            targetListUl.style.height = '';
+        }, 10);
+    }
+    state.writeToLocalStorage();
+}
+
 
 function returnItem({id, name, bought}) {
     return `
@@ -131,7 +169,7 @@ function returnItem({id, name, bought}) {
     `
 }
 
-function returnList({name, listId, color, items}) {
+function returnList({name, listId, color, minimized, items}) {
     if (!items) {
         return '';
     }
@@ -147,6 +185,9 @@ function returnList({name, listId, color, items}) {
     return `
         <li id=${listId} class="category_item ${color}">
             <div class="category_header">
+                <div class="category_header_minimize${minimized ? ' minimized' : ''}">
+                    <span class="category_header_minimize_arrow">&#9660</span>
+                </div>
                 <div class="category_header_name">
                     ${name}
                 </div>
@@ -154,7 +195,7 @@ function returnList({name, listId, color, items}) {
                     <button class="category_header_menu_button">&#10247</button>
                 </div>
             </div>
-            <ul class="category_items">
+            <ul class="category_items${minimized ? ' minimized' : ''}">
                 ${htmlItems}
             </ul>
             <ul class ="options_list category_options_menu">
@@ -168,13 +209,20 @@ function returnList({name, listId, color, items}) {
 
 function openListMenu(element) {
     let menu = element.closest('.category_item').querySelector('.category_options_menu');
+    menu.classList.add('transition');
     menu.style.display = 'block';
 
     setTimeout(() => {
+        menu.classList.remove('transition');
         document.body.addEventListener('click', closeListMenu);
 
         function closeListMenu() {
-            menu.style.display = 'none';
+            menu.classList.add('transition');
+            menu.addEventListener('transitionend', displayNone);
+            function displayNone() {
+                menu.style.display = 'none';
+                menu.removeEventListener('transitionend', displayNone);
+            }
             document.body.removeEventListener('click', closeListMenu);
         }
     }, 10);

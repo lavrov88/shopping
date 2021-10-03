@@ -4,6 +4,7 @@ const state = {
             name: 'Продукты',
             listId: '1',
             color: 'orange',
+            minimized: false,
             updated: false,
             items: [
                 {id: '1', name: 'хлеб', bought: false},
@@ -20,6 +21,7 @@ const state = {
             name: 'Аптека',
             listId: '2',
             color: 'green',
+            minimized: false,
             updated: false,
             items: []
         }, 
@@ -27,6 +29,7 @@ const state = {
             name: 'Хозтовары',
             listId: '3',
             color: 'blue',
+            minimized: false,
             updated: false,
             items: [
                 {id: '1', name: 'мыло', bought: false},

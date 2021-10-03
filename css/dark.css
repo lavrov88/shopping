@@ -11,10 +11,6 @@ body.dark .shopping_list_container {
     background: linear-gradient(to bottom, #5f5f5f, #111111);
 }
 
-/* body.dark .main {
-    background-color: #0000001e;
-} */
-
 body.dark .category_header {
     background-color: #5b7fb4;
     color: #fff;
@@ -36,6 +32,11 @@ body.dark .options_list__item {
 body.dark .options_list__item:hover {
     background-color: #8d8d8d;
 }
+
+body.dark .add_new_items {
+    background-color: #181818;
+}
+
 
 /* COLORS FOR CATEGORIES */
 
@@ -79,7 +80,6 @@ body.dark .manage_lists_popup__header__left {
     color: #eeeeee;
 }
 
-/* MANAGE LISTS */
 body.dark .manage_lists__item__center {
     border-left-color: #3f3f3f;
     border-right-color: #3f3f3f;

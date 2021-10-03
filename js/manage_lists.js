@@ -44,17 +44,11 @@ function openManageListsMenu() {
         function addControlBtns(event) {
             if (event.target.classList.contains('colored_square')) {
                 changeListColor(event);
+                manageListsItemsElement.removeEventListener('click', addControlBtns);
             } else if (event.target.classList.contains('manage_lists__item__right') || event.target.classList.contains('cross')) {
                 deleteList(event);
-            } else if (event.target.classList.contains('manage_lists__move_up_btn') || event.target.classList.contains('arrow_up')) {
-                temporaryList = [...replaceElementByBtn(event, 'up', temporaryList)];
-                rerenderListsItems();
-            } else if (event.target.classList.contains('manage_lists__move_down_btn') || event.target.classList.contains('arrow_down')) {
-                temporaryList = [...replaceElementByBtn(event, 'down', temporaryList)];
-                rerenderListsItems();
+                manageListsItemsElement.removeEventListener('click', addControlBtns);
             }
-            
-            manageListsItemsElement.removeEventListener('click', addControlBtns);
         }
 
         const dataObj = {
@@ -82,12 +76,6 @@ function openManageListsMenu() {
             <div class="manage_lists__item__left">
                 <div class="move_up_down_btn">
                     <div class="arrow">&#8691</div>
-                </div>
-                <div class="manage_lists__move_up_btn">
-                    <div class="arrow_up">&#9650</div>
-                </div>
-                <div class="manage_lists__move_down_btn">
-                    <div class="arrow_down">&#9660</div>
                 </div>
             </div>
             <div class="manage_lists__item__center">

@@ -2,17 +2,39 @@
     html {
         font-size: 18px;
     }
+    
 
     .shopping_list_container {
         margin-top: 0px;
         padding: 20px 5px;
-        height: 100vh;
+        height: 100%;
         border-radius: 0px;
         position: relative;
     }
 
+    .header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 400;
+        padding: 10px 15px;
+
+        background-color: #57626e;
+    }
+    body.dark .header {
+        background-color: #313b46;
+    }
+
+    .options_list.header_options_menu {
+        top: 12px;
+        right: 10px;
+        z-index: 500;
+    }
+
     .main {
         padding: 15px 5px;
+        height: 90vh;
     }
 
     .header_logo h1 {
@@ -20,6 +42,7 @@
     }
 
     .categories {
+        padding-top: 40px;
         padding-bottom: 40px;
     }
 
@@ -35,13 +58,15 @@
 
     /* MODAL */
 
-    .add_goods_popup {
-        transition-duration: 0.4s;
-    }
-
     .modal_wrapper {
+        position: fixed;
         padding: 5px;
         padding-top: 20px;
+    }
+
+    .modal_popup {
+        max-height: 95vh;
+        overflow-y: auto;
     }
 
     .list_options_popup {
@@ -54,27 +79,6 @@
 
     .add_goods_input, .add_goods_button, .add_goods__cancel_btn {
         font-size: 18px;
-    }
-
-    /* LIST EDIT */
-
-    .good_element__left {
-        width: 18%;
-        cursor: auto;
-    }
-
-    .move_up_down_btn {
-        opacity: 0;
-    }
-
-    .move_up_btn, 
-    .move_down_btn {
-        display: block;
-    }
-
-    .manage_lists__move_up_btn,
-    .manage_lists__move_down_btn {
-        display: flex;
     }
 
 }

@@ -2,7 +2,8 @@
 
 function openListOptions(target) {
     let listIndex = state.findListIndex(target.closest('.category_item').id);
-    let temporaryList = [...state.lists[listIndex].items];
+    //let temporaryList = [...state.lists[listIndex].items];
+    let temporaryList = [];
     let htmlItems = '';
 
     let optionsWrapper = document.querySelector('#list_options');
@@ -10,6 +11,12 @@ function openListOptions(target) {
     let optionsGoods = optionsWrapper.querySelector('.list_options_popup__items');
     let cancelBtn = optionsWrapper.querySelector('.cancel_btn');
     let acceptBtn = optionsWrapper.querySelector('.accept_btn');
+
+    for (let i = 0; i < state.lists[listIndex].items.length; i++) {
+        temporaryList[i] = {};
+        Object.assign(temporaryList[i], state.lists[listIndex].items[i]);
+        console.log(temporaryList);
+    }
 
     cancelBtn.addEventListener('click', closeListOptions);
     acceptBtn.addEventListener('click', acceptChanges);
@@ -24,11 +31,14 @@ function openListOptions(target) {
             htmlItems += `
                 <li id=${good.id} class="good_element edit${good.bought ? ' bought' : ''} ${state.lists[listIndex].color}">
                     <div class="good_element__left">
-                        <div class="move_up_down_btn">&#8691</div>
-                        <div class="move_up_btn">&#9650</div>
-                        <div class="move_down_btn">&#9660</div>
+                        <div class="move_up_down_btn">
+                            <div class="arrow">&#8691</div>
+                        </div>
                     </div>
-                    <div class="good_element__center">${good.name}</div>
+                    <div class="good_element__center">
+                        <span class="good_element__name">${good.name}</span>
+                        <input class="good_element__name_input" value=${good.name}></input>
+                    </div>
                     <div class="good_element__right">&#215</div>
                 </li>
             `
@@ -44,18 +54,14 @@ function openListOptions(target) {
         optionsGoods.addEventListener('click', addControlBtns);
 
         function addControlBtns(event) {
-            if (event.target.classList.contains('move_up_btn')) {
-                temporaryList = [...replaceElementByBtn(event, 'up', temporaryList)];
-            }
-            if (event.target.classList.contains('move_down_btn')) {
-                temporaryList = [...replaceElementByBtn(event, 'down', temporaryList)];
-            }
             if (event.target.classList.contains('good_element__right')) {
                 deleteItem(event);
+                optionsGoods.removeEventListener('click', addControlBtns);
+                temporaryList = sortBoughtItems(temporaryList);
+                rerenderList();
+            } else if (event.target.classList.contains('good_element__name')) {
+                editGoodName(event);
             }
-            optionsGoods.removeEventListener('click', addControlBtns);
-            temporaryList = sortBoughtItems(temporaryList);
-            rerenderList();
         };
 
         const dataObj = {
@@ -75,6 +81,28 @@ function openListOptions(target) {
 
     function updateTemporary(list) {
         temporaryList = [...list];
+    }
+
+    function editGoodName(event) {
+        const elementName = event.target;
+        const elementNameInput = event.target.closest('.good_element__center').querySelector('.good_element__name_input');
+        const elementId = event.target.closest('.good_element').id;
+        const elementIndex = temporaryList.findIndex(item => item.id === elementId);
+
+        elementName.style.display = 'none';
+        elementNameInput.style.display = 'inline';
+        elementNameInput.focus();
+        elementNameInput.selectionStart = elementNameInput.value.length;
+
+        elementNameInput.addEventListener('input', (event) => {
+            temporaryList[elementIndex].name = elementNameInput.value;
+            elementName.textContent = elementNameInput.value;
+        });
+
+        elementNameInput.addEventListener('blur', (event) => {
+            elementName.style.display = 'inline';
+            elementNameInput.style.display = '';
+        });
     }
 
     function deleteItem(event) {
