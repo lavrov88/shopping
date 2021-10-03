@@ -69,6 +69,18 @@
         overflow-y: auto;
     }
 
+    .add_goods_wrapper {
+        align-items: flex-end;
+    }
+
+    #confirm_delete {
+        align-items: flex-end;
+    }
+
+    .list_options_wrapper, .manage_lists_wrapper {
+        align-items: center;
+    }
+
     .list_options_popup {
         width: 95%;
     }

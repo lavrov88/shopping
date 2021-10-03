@@ -50,30 +50,21 @@ function initialRender() {
 
 function openHeaderMenu() {
     const menu = document.querySelector('.header_options_menu');
-    menu.classList.add('transition');
-    menu.style.display = 'block';
-
-    menu.querySelector('.switch_theme').addEventListener('click', switchTheme)
+    openWithAnimation(menu, 'transition', 'block');
+    menu.querySelector('.switch_theme').addEventListener('click', switchTheme);
 
     setTimeout(() => {
-        menu.classList.remove('transition');
         document.body.addEventListener('click', closeHeaderMenu);
-
-        function closeHeaderMenu() {
-            menu.classList.add('transition');
-            menu.addEventListener('transitionend', displayNone);
-            document.body.removeEventListener('click', closeHeaderMenu);
-            function displayNone() {
-                menu.style.display = 'none';
-                menu.classList.remove('transition');
-                menu.removeEventListener('transitionend', displayNone);
-            }
-        }
     }, 10);
+
+    function closeHeaderMenu() {
+        document.body.removeEventListener('click', closeHeaderMenu);
+        closeWithAnimation(menu, 'transition');
+    }
+
 }
 
 function switchTheme() {
-    //document.body.classList.toggle('dark');
     if (state.options.darkTheme) {
         state.options.darkTheme = false;
     } else {
@@ -146,15 +137,13 @@ function minimizeList(target) {
 
         function clearHeight() {
             targetListUl.style.height = '';
-            targetListUl.classList.remove('minimized');
-            minimizeBtn.classList.remove('minimized');
+            targetListElement.classList.remove('minimized');
             targetListUl.removeEventListener('transitionend', clearHeight);
         }
     } else {
         state.lists[targetListIndex].minimized = true;
         targetListUl.style.height = targetListUl.scrollHeight + 'px';
-        targetListUl.classList.add('minimized');
-        minimizeBtn.classList.add('minimized');
+        targetListElement.classList.add('minimized');
         setTimeout(() => {
             targetListUl.style.height = '';
         }, 10);
@@ -183,19 +172,22 @@ function returnList({name, listId, color, minimized, items}) {
     });
 
     return `
-        <li id=${listId} class="category_item ${color}">
+        <li id=${listId} class="category_item ${color}${minimized ? ' minimized' : ''}">
             <div class="category_header">
-                <div class="category_header_minimize${minimized ? ' minimized' : ''}">
+                <div class="category_header_minimize">
                     <span class="category_header_minimize_arrow">&#9660</span>
                 </div>
                 <div class="category_header_name">
-                    ${name}
+                    ${name ? name : '(no name)'}
+                </div>
+                <div class="items_amount">
+                    ${items.length} ${items.length > 1 ? 'items' : 'item'}
                 </div>
                 <div class="category_header_menu">
                     <button class="category_header_menu_button">&#10247</button>
                 </div>
             </div>
-            <ul class="category_items${minimized ? ' minimized' : ''}">
+            <ul class="category_items">
                 ${htmlItems}
             </ul>
             <ul class ="options_list category_options_menu">
@@ -246,10 +238,10 @@ function openDeleteAllConfirmation(listId) {
     const listName = state.lists[listIndex].name;
 
     confirmWindow.querySelector('.accept_btn').addEventListener('click', confirmDelete);
-    confirmWindow.querySelector('.cancel_btn').addEventListener('click', cancelDelete);
-    
+    confirmWindow.querySelector('.cancel_btn').addEventListener('click', cancelDelete);    
     confirmWindow.querySelector('.confirm_delete_popup__message p').innerHTML = 'Are you sure you want to delete <strong>all</strong> goods in list "' + listName + '"?';
-    confirmWindow.style.display = 'flex';
+    
+    openWithAnimation(confirmWindow, 'opening', 'flex');
 
     function confirmDelete() {
         state.deleteAllInList(listId);
@@ -264,7 +256,25 @@ function openDeleteAllConfirmation(listId) {
     function closeAndRerender() {
         confirmWindow.querySelector('.accept_btn').removeEventListener('click', confirmDelete);
         confirmWindow.querySelector('.cancel_btn').removeEventListener('click', confirmDelete);
-        confirmWindow.style.display = 'none';
+        closeWithAnimation(confirmWindow, 'opening');
         initialRender();
+    }
+}
+
+function openWithAnimation(elem, cssClass, display) {
+    elem.classList.add(cssClass);
+    elem.style.display = display;
+    setTimeout(() => {
+        elem.classList.remove(cssClass);
+    }, 10);
+}
+
+function closeWithAnimation(elem, cssClass) {
+    elem.classList.add(cssClass);
+    elem.addEventListener('transitionend', displayNone);
+    function displayNone() {
+        elem.removeEventListener('transitionend', displayNone);
+        elem.classList.remove(cssClass);
+        elem.style.display = '';
     }
 }

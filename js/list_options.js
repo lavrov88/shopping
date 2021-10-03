@@ -2,7 +2,6 @@
 
 function openListOptions(target) {
     let listIndex = state.findListIndex(target.closest('.category_item').id);
-    //let temporaryList = [...state.lists[listIndex].items];
     let temporaryList = [];
     let htmlItems = '';
 
@@ -15,15 +14,13 @@ function openListOptions(target) {
     for (let i = 0; i < state.lists[listIndex].items.length; i++) {
         temporaryList[i] = {};
         Object.assign(temporaryList[i], state.lists[listIndex].items[i]);
-        console.log(temporaryList);
     }
 
     cancelBtn.addEventListener('click', closeListOptions);
     acceptBtn.addEventListener('click', acceptChanges);
 
     rerenderList();
-    optionsWrapper.style.display = 'flex';
-
+    openWithAnimation(optionsWrapper, 'opening', 'flex');
 
     function rerenderList() {
         htmlItems = '';
@@ -36,7 +33,7 @@ function openListOptions(target) {
                         </div>
                     </div>
                     <div class="good_element__center">
-                        <span class="good_element__name">${good.name}</span>
+                        <div class="good_element__name">${good.name}</div>
                         <input class="good_element__name_input" value=${good.name}></input>
                     </div>
                     <div class="good_element__right">&#215</div>
@@ -100,7 +97,7 @@ function openListOptions(target) {
         });
 
         elementNameInput.addEventListener('blur', (event) => {
-            elementName.style.display = 'inline';
+            elementName.style.display = '';
             elementNameInput.style.display = '';
         });
     }
@@ -112,7 +109,7 @@ function openListOptions(target) {
     }
 
     function closeListOptions() {
-        optionsWrapper.style.display = '';
+        closeWithAnimation(optionsWrapper, 'opening');
     }
 
     function acceptChanges() {

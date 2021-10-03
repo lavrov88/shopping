@@ -17,6 +17,9 @@ function addDragAndDrop(dataObj) {
         let dragZone = dataObj.wrapper.querySelector(dataObj.dragZoneSelector);
         dragBtn.onpointerdown = function(event) {
             event.preventDefault();
+
+            window.navigator.vibrate(30);
+            dragElement.classList.add('dragging');
             dragElement.style.position = 'absolute';
             dragElement.style.zIndex = 1000;
             dragElement.style.left = 0;
@@ -27,7 +30,7 @@ function addDragAndDrop(dataObj) {
             document.addEventListener('pointerup', onMouseUp);
 
             function onMouseMove(event) {
-                let newTop = event.clientY - shiftY - dragZone.getBoundingClientRect().top;
+                let newTop = event.clientY - shiftY - dragZone.getBoundingClientRect().top - 20;
 
                 if (newTop < -dataObj.edgeHeight ) {
                     newTop = -dataObj.edgeHeight;
@@ -66,6 +69,7 @@ function addDragAndDrop(dataObj) {
                 let targetElementId = moveData.targetElement.id;
                 let targetElementIndex = dataObj.temporaryList.findIndex(item => '' + (item.id || item.listId) === targetElementId);
                 
+                window.navigator.vibrate(30);
                 if (moveData.position === 'before') {
                     dataObj.temporaryList = [...dataObj.temporaryList.slice(0, targetElementIndex), movingElement, ...dataObj.temporaryList.slice(targetElementIndex)];
                 } else {
@@ -78,7 +82,8 @@ function addDragAndDrop(dataObj) {
                 if (dataObj.sortFunction) {
                     dataObj.sortFunction(dataObj.temporaryList);
                 }
-                
+
+                dragElement.classList.remove('dragging');
                 dataObj.updateTemporaryList(dataObj.temporaryList);
                 dataObj.rerenderFunction();
             }

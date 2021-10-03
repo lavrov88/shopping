@@ -9,7 +9,8 @@ function drawCategoriesButtons() {
     let categories = '';
     state.lists.forEach(list => {
         categories += `
-        <button id="${list.listId}" class="add_goods_button ${list.color}">${list.name}</button>
+        <button id="${list.listId}" class="add_goods_button ${list.color}">
+        ${list.name ? list.name : '(list with no name)'}</button>
         `
     });
     
@@ -17,24 +18,13 @@ function drawCategoriesButtons() {
 }
 
 function openAddGoodsMenu() {
-    document.querySelector('.add_goods_wrapper').classList.add('opening');
-    document.querySelector('.add_goods_wrapper').style.display = 'flex';
-    setTimeout(() => {
-        document.querySelector('.add_goods_wrapper').classList.remove('opening');
-    }, 0);
+    openWithAnimation(document.querySelector('.add_goods_wrapper'), 'opening', 'flex');
     drawCategoriesButtons();
     document.querySelector('#new_goods_textarea').focus();
 }
 
-function closeAddGoodMenu(event) {
-        document.querySelector('.add_goods_wrapper').classList.add('closing');
-        document.querySelector('.add_goods_wrapper').addEventListener('transitionend', clearAfterAnimation);
-
-        function clearAfterAnimation() {
-            document.querySelector('.add_goods_wrapper').style.display = 'none';
-            document.querySelector('.add_goods_wrapper').classList.remove('closing');
-            document.querySelector('.add_goods_wrapper').removeEventListener('transitionend', clearAfterAnimation);
-        }
+function closeAddGoodMenu() {
+    closeWithAnimation(document.querySelector('.add_goods_wrapper'), 'opening');
 }
 
 function clearNewGoodsInput() {
@@ -43,7 +33,9 @@ function clearNewGoodsInput() {
 }
 
 function parseNewGoods(string) {
-    let arr = string.split(',').map(elem => elem.trim());
+    let arr = string.split(',')
+        .map(elem => elem.trim())
+        .filter(elem => elem.length > 0);
     return arr;
 }
 

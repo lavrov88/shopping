@@ -11,7 +11,7 @@ function openManageListsMenu() {
     cancelBtn.addEventListener('click', closeManageListsMenu);
     acceptBtn.addEventListener('click', acceptChanges);
 
-    popupWrapper.style.display = 'flex';
+    openWithAnimation(popupWrapper, 'opening', 'flex');
     rerenderListsItems();
 
     function createTemporaryList() {
@@ -160,7 +160,7 @@ function openManageListsMenu() {
     }
 
     function closeManageListsMenu() {
-        popupWrapper.style.display = 'none';
+        closeWithAnimation(popupWrapper, 'opening');
     }
 
     function acceptChanges() {
