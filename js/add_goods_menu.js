@@ -2,7 +2,7 @@
 
 document.querySelector('.add_goods_btn').addEventListener('click', openAddGoodsMenu);
 document.querySelector('.add_goods_input__clear_btn').addEventListener('click', clearNewGoodsInput);
-document.querySelector('.add_goods__cancel_btn').addEventListener('click', closeAddGoodMenu);
+document.querySelector('.add_goods_wrapper').addEventListener('click', closeAddGoodMenu);
 document.querySelector('.add_goods_buttons').addEventListener('click', acceptNewGoodToList);
 
 function drawCategoriesButtons() {
@@ -23,8 +23,10 @@ function openAddGoodsMenu() {
     document.querySelector('#new_goods_textarea').focus();
 }
 
-function closeAddGoodMenu() {
-    closeWithAnimation(document.querySelector('.add_goods_wrapper'), 'opening');
+function closeAddGoodMenu(event) {
+    if (event.target === document.querySelector('.add_goods_wrapper') || event.target === document.querySelector('.add_goods__cancel_btn')) {
+        closeWithAnimation(document.querySelector('.add_goods_wrapper'), 'opening');
+    }
 }
 
 function clearNewGoodsInput() {
@@ -51,6 +53,10 @@ function idGenerator() {
 }
 
 function acceptNewGoodToList(event) {
+    if (!event.target.classList.contains('add_goods_button')) {
+        return;
+    }
+
     let newGoods = parseNewGoods(document.querySelector('#new_goods_textarea').value);
     let targetListIndex = state.findListIndex(event.target.id);
     newGoods.forEach(good => {
@@ -58,7 +64,7 @@ function acceptNewGoodToList(event) {
     });
 
     document.querySelector('#new_goods_textarea').value = '';
-    closeAddGoodMenu();
+    closeWithAnimation(document.querySelector('.add_goods_wrapper'), 'opening');
     state.writeToLocalStorage();
     initialRender();
 }

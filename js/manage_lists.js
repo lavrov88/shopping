@@ -8,7 +8,7 @@ function openManageListsMenu() {
     createTemporaryList();
 
     addNewListBtn.addEventListener('click', addNewList);
-    cancelBtn.addEventListener('click', closeManageListsMenu);
+    popupWrapper.addEventListener('click', closeManageListsMenu);
     acceptBtn.addEventListener('click', acceptChanges);
 
     openWithAnimation(popupWrapper, 'opening', 'flex');
@@ -160,9 +160,11 @@ function openManageListsMenu() {
         rerenderListsItems();
     }
 
-    function closeManageListsMenu() {
-        closeWithAnimation(popupWrapper, 'opening');
-        document.querySelector('.main').classList.remove('noscroll');
+    function closeManageListsMenu(event) {
+        if (event.target === popupWrapper || event.target === cancelBtn) {
+            closeWithAnimation(popupWrapper, 'opening');
+            document.querySelector('.main').classList.remove('noscroll');
+        }
     }
 
     function acceptChanges() {

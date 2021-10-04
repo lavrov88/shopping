@@ -5,7 +5,6 @@ function openListOptions(target) {
     let temporaryList = [];
     let htmlItems = '';
 
-    const mainElement = document.querySelector('.main');
     const optionsWrapper = document.querySelector('#list_options');
     const optionsHeader = optionsWrapper.querySelector('.list_options_popup__header');
     const optionsGoods = optionsWrapper.querySelector('.list_options_popup__items');
@@ -17,12 +16,11 @@ function openListOptions(target) {
         Object.assign(temporaryList[i], state.lists[listIndex].items[i]);
     }
 
-    cancelBtn.addEventListener('click', closeListOptions);
+    optionsWrapper.addEventListener('click', closeListOptions);
     acceptBtn.addEventListener('click', acceptChanges);
 
     rerenderList();
     openWithAnimation(optionsWrapper, 'opening', 'flex');
-    mainElement.classList.add('noscroll');
 
     function rerenderList() {
         htmlItems = '';
@@ -111,14 +109,15 @@ function openListOptions(target) {
         rerenderList();
     }
 
-    function closeListOptions() {
-        closeWithAnimation(optionsWrapper, 'opening');
-        mainElement.classList.remove('noscroll');
+    function closeListOptions(event) {
+        if(event.target === optionsWrapper || event.target === cancelBtn) {
+            closeWithAnimation(optionsWrapper, 'opening');
+        }
     }
 
     function acceptChanges() {
         state.lists[listIndex].items = [...temporaryList];
-        closeListOptions();
+        closeWithAnimation(optionsWrapper, 'opening');
         state.writeToLocalStorage();
         initialRender();
     }

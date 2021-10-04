@@ -6,10 +6,10 @@ document.querySelector('.options_list__item.manage_lists').addEventListener('cli
 document.querySelector('#categories').addEventListener('click', (event) => {
     if (event.target.classList.contains('good_element')) {
         toggleBought(event.target);
-    } else if (event.target.classList.contains('category_header_minimize') || event.target.classList.contains('category_header_minimize_arrow')) {
-        minimizeList(event.target);
-    } else if (event.target.classList.contains('category_header_menu_button')) {
+    } else if (event.target.closest('.category_header_menu')) {
         openListMenu(event.target);
+    } else if (event.target.closest('.category_header')) {
+        minimizeList(event.target);
     } else if (event.target.classList.contains('options_list__item') && event.target.classList.contains('edit')) {
         openListOptions(event.target);
     } else if (event.target.classList.contains('delete_crossed')) {
@@ -125,8 +125,15 @@ function sortBoughtItems(list) {
 }
 
 function minimizeList(target) {
-    const minimizeBtn = target.closest('.category_header_minimize');
-    const targetListElement = minimizeBtn.closest('.category_item');
+    console.log('header clicked');
+    console.log(target);
+    if (target.closest('.category_header_menu')) {
+        return;
+    }
+
+    const header = target.closest('.category_header');
+    const minimizeBtn = header.querySelector('.category_header_minimize');
+    const targetListElement = header.closest('.category_item');
     const targetListIndex = state.lists.findIndex(item => item.listId === targetListElement.id);
     const targetListUl = targetListElement.querySelector('.category_items');
     
@@ -238,7 +245,7 @@ function openDeleteAllConfirmation(listId) {
     const listName = state.lists[listIndex].name;
 
     confirmWindow.querySelector('.accept_btn').addEventListener('click', confirmDelete);
-    confirmWindow.querySelector('.cancel_btn').addEventListener('click', cancelDelete);    
+    confirmWindow.addEventListener('click', cancelDelete);
     confirmWindow.querySelector('.confirm_delete_popup__message p').innerHTML = 'Are you sure you want to delete <strong>all</strong> goods in list "' + listName + '"?';
     
     openWithAnimation(confirmWindow, 'opening', 'flex');
@@ -249,8 +256,10 @@ function openDeleteAllConfirmation(listId) {
         closeAndRerender();
     }
 
-    function cancelDelete() {
-        closeAndRerender();
+    function cancelDelete(event) {
+        if (event.target === confirmWindow || event.target === confirmWindow.querySelector('.cancel_btn')) {
+            closeAndRerender();
+        }
     }
 
     function closeAndRerender() {
