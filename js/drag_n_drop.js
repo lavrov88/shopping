@@ -1,22 +1,15 @@
-// const dataObj = {
-//     temporaryList: temporaryList,
-//     wrapper: optionsWrapper,
-//     dragBtnSelector: '.good_element__left',
-//     dragElementSelector: '.good_element',
-//     dragZoneSelector: '.list_options_popup__items > ul',
-//     edgeHeight: 60,
-//     sortFunction: sortBoughtItems,
-//     updateTemporaryList: updateTemporary,
-//     rerenderFunction: rerenderList
-// }
-
 function addDragAndDrop(dataObj) {
     let moveData;
     dataObj.wrapper.querySelectorAll(dataObj.dragBtnSelector).forEach(dragBtn => {
         let dragElement = dragBtn.closest(dataObj.dragElementSelector);
         let dragZone = dataObj.wrapper.querySelector(dataObj.dragZoneSelector);
+
+        //dragZone.style.height = dragZone.scrollHeight + 'px';
+
         dragBtn.onpointerdown = function(event) {
             event.preventDefault();
+
+            dragZone.style.height = dragZone.scrollHeight + 'px';
 
             window.navigator.vibrate(30);
             dragElement.classList.add('dragging');
@@ -52,7 +45,7 @@ function addDragAndDrop(dataObj) {
                     });
 
                     let goodBelow =  elementBelow.closest(dataObj.dragElementSelector);
-                    if (event.clientY > goodBelow.getBoundingClientRect().top + goodBelow.offsetHeight / 2) {
+                    if (event.clientY > goodBelow.getBoundingClientRect().top + goodBelow.offsetHeight * 0.5) {
                         goodBelow.style.marginBottom = '50px';
                         moveData = { movingElement: dragElement, targetElement: goodBelow, position: 'after' }
                     } else {
@@ -94,3 +87,16 @@ function addDragAndDrop(dataObj) {
         }
     });
 }
+
+// EXAMPLE OF DATA OBJECT
+// const dataObj = {
+//     temporaryList: temporaryList,
+//     wrapper: optionsWrapper,
+//     dragBtnSelector: '.good_element__left',
+//     dragElementSelector: '.good_element',
+//     dragZoneSelector: '.list_options_popup__items > ul',
+//     edgeHeight: 60,
+//     sortFunction: sortBoughtItems,
+//     updateTemporaryList: updateTemporary,
+//     rerenderFunction: rerenderList
+// }

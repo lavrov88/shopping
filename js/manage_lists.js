@@ -12,6 +12,7 @@ function openManageListsMenu() {
     acceptBtn.addEventListener('click', acceptChanges);
 
     openWithAnimation(popupWrapper, 'opening', 'flex');
+    document.querySelector('.main').classList.add('noscroll');
     rerenderListsItems();
 
     function createTemporaryList() {
@@ -161,6 +162,7 @@ function openManageListsMenu() {
 
     function closeManageListsMenu() {
         closeWithAnimation(popupWrapper, 'opening');
+        document.querySelector('.main').classList.remove('noscroll');
     }
 
     function acceptChanges() {

@@ -1,15 +1,16 @@
 // LIST OPTIONS POPUP
 
 function openListOptions(target) {
-    let listIndex = state.findListIndex(target.closest('.category_item').id);
+    const listIndex = state.findListIndex(target.closest('.category_item').id);
     let temporaryList = [];
     let htmlItems = '';
 
-    let optionsWrapper = document.querySelector('#list_options');
-    let optionsHeader = optionsWrapper.querySelector('.list_options_popup__header');
-    let optionsGoods = optionsWrapper.querySelector('.list_options_popup__items');
-    let cancelBtn = optionsWrapper.querySelector('.cancel_btn');
-    let acceptBtn = optionsWrapper.querySelector('.accept_btn');
+    const mainElement = document.querySelector('.main');
+    const optionsWrapper = document.querySelector('#list_options');
+    const optionsHeader = optionsWrapper.querySelector('.list_options_popup__header');
+    const optionsGoods = optionsWrapper.querySelector('.list_options_popup__items');
+    const cancelBtn = optionsWrapper.querySelector('.cancel_btn');
+    const acceptBtn = optionsWrapper.querySelector('.accept_btn');
 
     for (let i = 0; i < state.lists[listIndex].items.length; i++) {
         temporaryList[i] = {};
@@ -21,6 +22,7 @@ function openListOptions(target) {
 
     rerenderList();
     openWithAnimation(optionsWrapper, 'opening', 'flex');
+    mainElement.classList.add('noscroll');
 
     function rerenderList() {
         htmlItems = '';
@@ -74,6 +76,7 @@ function openListOptions(target) {
         };
 
         addDragAndDrop(dataObj);
+        
     }
 
     function updateTemporary(list) {
@@ -110,6 +113,7 @@ function openListOptions(target) {
 
     function closeListOptions() {
         closeWithAnimation(optionsWrapper, 'opening');
+        mainElement.classList.remove('noscroll');
     }
 
     function acceptChanges() {

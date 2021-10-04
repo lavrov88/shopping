@@ -40,7 +40,7 @@ ul {
     padding: 20px;
     
     background-color: #707070;
-    background: linear-gradient(to bottom, #8d8d8d, #ececec);
+    background: linear-gradient(to bottom, #7c7e8d, #ececec);
 }
 
 /* HEADER */
@@ -138,8 +138,9 @@ ul {
     padding: 15px;
     border-radius: 8px;
     min-height: 80px;
-    
-    /* background-color: #fff; */
+}
+.main.noscroll {
+    overflow: hidden;
 }
 
 /* LISTS */
@@ -181,6 +182,7 @@ ul {
     vertical-align: middle;
     font-size: 14px;
     line-height: 1.8;
+    color: #000;
     background-color: #ffffffb2;
     cursor: pointer;
 
@@ -206,7 +208,7 @@ ul {
     color: #272727;
     font-size: 12px;
     line-height: 1;
-    font-weight: 500;
+    font-weight: 600;
 
     transition: opacity 0.2s linear;
 }
@@ -271,6 +273,7 @@ ul {
 
     background-color: #fff;
     border: 2px #ccc solid;
+    box-shadow: 0px 4px 5px 1px #3f3f3f83;
     transition: all 0.1s ease-in-out;
 }
 
@@ -284,13 +287,21 @@ ul {
 }
 
 .options_list__item {
-    padding: 4px 8px;
+    padding: 10px 20px;
+
     color: #000;
+    text-align: left;
     cursor: pointer;
+    user-select: none;
 }
 
 .options_list__item:hover {
     background-color: #e4e4e4;
+}
+
+.options_list.category_options_menu {
+    top: -2px;
+    right: -2px;
 }
 
 
@@ -308,6 +319,8 @@ ul {
     background-color:#4f6c97;
     color: #fff;
     cursor: pointer;
+
+    transition: margin 0.1s ease-in-out;
 }
 
 .good_element:hover {
@@ -453,7 +466,7 @@ ul {
     font-weight: 800;
     color: #fff;
     background-color: #5f6372;
-    box-shadow: 0px 4px 5px 1px #848484;
+    box-shadow: 0px 2px 5px 1px #3d3d3d;
     cursor: pointer;
 }
 .add_goods_btn:hover {
@@ -461,7 +474,7 @@ ul {
 }
 .add_goods_btn:active {
     transform: translateY(5%) scale(97%);
-    box-shadow: 0px 2px 5px 0px #848484;
+    box-shadow: 0px 0px 5px 0px #3d3d3d;
 }
 
 /* MODAL */
@@ -478,7 +491,7 @@ ul {
     padding: 20px;
 
     background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(3px);
 }
 
 .modal_popup {
@@ -497,6 +510,7 @@ ul {
 }
 
 .confirm_delete_popup {
+    padding-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -604,13 +618,15 @@ ul {
 }
 
 .add_goods_button {
+    position: relative;
     display: block;
     flex-grow: 1;
     min-width: 22%;
-    margin: 0 5px 5px;
-    padding: 6px 10px;
+    margin: 0 5px 10px;
+    padding: 8px 10px;
     border: none;
     border-radius: 5px;
+    overflow: hidden;
 
     text-align: center;
     background-color:rgb(79, 108, 151);
@@ -618,6 +634,15 @@ ul {
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+}
+.add_goods_button:hover:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff38;
 }
 
 .add_goods__cancel_btn {
@@ -704,8 +729,15 @@ ul {
     opacity: 1;
 }
 
+.good_element__left,
+.move_up_down_btn,
+.arrow {
+    user-select: none;
+}
+
 .good_element.edit.dragging {
-    /* transform:scale(1.05); */
+    border: #fff 1px solid;
+    transform:scale(1.05);
     box-shadow: 0px 3px 5px 5px #88888880;
 }
 
@@ -813,6 +845,9 @@ ul {
     color: #fff;
     cursor: pointer;
 }
+.add_new_list_btn:hover {
+    background-color: #63af63dc;
+}
 
 .add_new_list_btn_plus {
     margin-right: 7px;
@@ -828,12 +863,13 @@ ul {
 .manage_lists__item {
     display: flex;
     width: 100%;
-    margin: 10px 0;
+    margin-bottom: 12px;
     border-radius: 6px;
     justify-content: center;
     align-items: stretch;
 
     background-color: #7db1ff;
+    box-shadow: 0px 2px 5px 1px #88888880;
 }
 
 .manage_lists__item__left, .manage_lists__item__right {
