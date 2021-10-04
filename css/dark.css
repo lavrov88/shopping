@@ -45,7 +45,7 @@ body.dark .add_new_items {
     background-color: #181818;
 }
 
-.confirm_delete_popup__message {
+body.dark .confirm_delete_popup__message {
     color: #fff;
 }
 
