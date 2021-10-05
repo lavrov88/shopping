@@ -1,7 +1,6 @@
 // EVENT LISTENERS
 
 document.querySelector('.header_menu__button').addEventListener('click', openHeaderMenu);
-document.querySelector('.options_list__item.manage_lists').addEventListener('click', openManageListsMenu);
 
 document.querySelector('#categories').addEventListener('click', (event) => {
     if (event.target.classList.contains('good_element')) {
@@ -51,7 +50,9 @@ function initialRender() {
 function openHeaderMenu() {
     const menu = document.querySelector('.header_options_menu');
     openWithAnimation(menu, 'transition', 'block');
+    menu.querySelector('.delete_crossed_in_all_lists').addEventListener('click', deleteCrossedInAllLists);
     menu.querySelector('.switch_theme').addEventListener('click', switchTheme);
+    menu.querySelector('.manage_lists').addEventListener('click', openManageListsMenu);
 
     setTimeout(() => {
         document.body.addEventListener('click', closeHeaderMenu);
@@ -59,9 +60,17 @@ function openHeaderMenu() {
 
     function closeHeaderMenu() {
         document.body.removeEventListener('click', closeHeaderMenu);
+        menu.querySelector('.delete_crossed_in_all_lists').removeEventListener('click', deleteCrossedInAllLists);
+        menu.querySelector('.switch_theme').removeEventListener('click', switchTheme);
+        menu.querySelector('.manage_lists').removeEventListener('click', openManageListsMenu);
         closeWithAnimation(menu, 'transition');
     }
 
+}
+
+function deleteCrossedInAllLists() {
+    const deleteCrossedBtns = document.querySelectorAll('.options_list__item.delete_crossed');
+    deleteCrossedBtns.forEach(element => deleteCrossedBtn(element));
 }
 
 function switchTheme() {
@@ -125,14 +134,11 @@ function sortBoughtItems(list) {
 }
 
 function minimizeList(target) {
-    console.log('header clicked');
-    console.log(target);
     if (target.closest('.category_header_menu')) {
         return;
     }
 
     const header = target.closest('.category_header');
-    const minimizeBtn = header.querySelector('.category_header_minimize');
     const targetListElement = header.closest('.category_item');
     const targetListIndex = state.lists.findIndex(item => item.listId === targetListElement.id);
     const targetListUl = targetListElement.querySelector('.category_items');
@@ -228,10 +234,32 @@ function openListMenu(element) {
 }
 
 function deleteCrossedBtn(target) {
-    let listId = target.closest('.category_item').id;
+    const listId = target.closest('.category_item').id;
+    const crossedElements = target.closest('.category_item').querySelectorAll('.bought');
+
+    crossedElements.forEach((element, index) => {
+        collapseItem(element);
+        if (index === 0) {
+            element.addEventListener('transitionend', deleteAndRerender);
+        }
+    });
     state.deleteCrossedInList(listId);
     state.writeToLocalStorage();
-    initialRender();
+
+    function deleteAndRerender(event) {
+        event.target.removeEventListener('transitionend', deleteAndRerender);
+        initialRender();
+    }
+}
+
+function collapseItem(item) {
+    item.style.height = item.scrollHeight + 'px';
+    item.style.width = item.scrollWidth + 'px';
+    item.classList.add('collapsed');
+    setTimeout(() => {
+        item.style.height = '';
+        item.style.width = '';
+    }, 10);
 }
 
 function deleteAllBtn(target) {

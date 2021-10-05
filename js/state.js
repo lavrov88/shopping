@@ -54,6 +54,10 @@ const state = {
         this.lists[listIndex].items = this.lists[listIndex].items.filter(item => !item.bought);
     },
 
+    deleteCrossedInAllLists() {
+        this.lists.forEach(list => this.deleteCrossedInList(list.listId));
+    },
+
     deleteAllInList(listId) {
         let listIndex = this.findListIndex(listId);
         this.lists[listIndex].items = [];

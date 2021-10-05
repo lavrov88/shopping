@@ -18,13 +18,22 @@
         top: 0;
         left: 0;
         z-index: 400;
-        padding: 10px 15px;
+        padding: 12px 15px;
 
         background-color: #57626e;
         box-shadow: 0px 3px 5px 2px #32373d81;
     }    
     body.dark .header {
         background-color: #313b46;
+    }
+
+    .header_logo {
+        color: #fff;
+    }
+
+    .header_menu__button {
+        border: 2px #d5dbe4 solid;
+        color: #d5dbe4;
     }
 
     .options_list.header_options_menu {
@@ -47,6 +56,13 @@
         padding-bottom: 60px;
     }
 
+    .category_header_name {
+        font-size: 18px;
+    }
+    .category_header_menu_button {
+        font-size: 22px;
+    }
+
     .good_element:hover {
         opacity: unset;
     }
@@ -58,9 +74,9 @@
         width: 100%;
         padding: 10px;
 
-        background: linear-gradient(to bottom, #ecececbd, #7c7e8d);
+        background: #d8dae2c0;
         backdrop-filter: blur(2px);
-        box-shadow: 0px -2px 5px 1px #32373d56;
+        box-shadow: 0px -2px 5px 1px #32373d17;
     }
 
     body.dark .add_new_items {
@@ -82,6 +98,10 @@
 
     .add_goods_wrapper {
         align-items: flex-end;
+    }
+
+    .add_goods__cancel_btn {
+        height: 38px;
     }
 
     #confirm_delete {

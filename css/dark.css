@@ -11,9 +11,18 @@ body.dark .shopping_list_container {
     background: linear-gradient(to bottom, #5f5f5f, #111111);
 }
 
+body.dark .header_logo {
+    color: #e2e2e2;
+}
+
 body.dark .category_header {
     background-color: #5b7fb4;
     color: #000000;
+}
+
+body.dark .header_menu__button {
+    border: 2px #d5dbe4 solid;
+    color: #d5dbe4;
 }
 
 body.dark .category_items {
@@ -25,6 +34,7 @@ body.dark .category_item {
 }
 
 body.dark .add_goods_btn {
+    background-color: #464953;
     box-shadow: 0px 4px 5px 1px #0c0c0c;
 }
 

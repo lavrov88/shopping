@@ -4,8 +4,6 @@ function addDragAndDrop(dataObj) {
         let dragElement = dragBtn.closest(dataObj.dragElementSelector);
         let dragZone = dataObj.wrapper.querySelector(dataObj.dragZoneSelector);
 
-        //dragZone.style.height = dragZone.scrollHeight + 'px';
-
         dragBtn.onpointerdown = function(event) {
             event.preventDefault();
 
@@ -77,6 +75,7 @@ function addDragAndDrop(dataObj) {
                 }
 
                 dragElement.classList.remove('dragging');
+                dragZone.style.height = '';
                 dataObj.updateTemporaryList(dataObj.temporaryList);
                 dataObj.rerenderFunction();
             }

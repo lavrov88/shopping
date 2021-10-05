@@ -12,7 +12,6 @@ function openManageListsMenu() {
     acceptBtn.addEventListener('click', acceptChanges);
 
     openWithAnimation(popupWrapper, 'opening', 'flex');
-    document.querySelector('.main').classList.add('noscroll');
     rerenderListsItems();
 
     function createTemporaryList() {
@@ -113,13 +112,31 @@ function openManageListsMenu() {
             items: []
         });
         rerenderListsItems();
-        manageListsItemsElement.lastElementChild.querySelector('input').focus();
+
+        const lastList = manageListsItemsElement.lastElementChild;
+        const lastListHeight = lastList.scrollHeight + 'px';
+        lastList.style.transition = 'transform 0s';
+        lastList.classList.add('collapsed');
+        setTimeout(() => {
+            lastList.style.height = lastListHeight;
+            lastList.style.transition = '';
+            lastList.classList.remove('collapsed');
+            lastList.querySelector('input').focus();
+            lastList.addEventListener('transitionend', () => lastList.style.height = '', {once: true});
+        }, 10);
     }
 
     function deleteList(event) {
-        let idToDelete = event.target.closest('.manage_lists__item').id;
+        const list = event.target.closest('.manage_lists__item')
+        const idToDelete = list.id;
         temporaryList = temporaryList.filter(item => item.listId !== idToDelete);
-        rerenderListsItems();
+        list.addEventListener('transitionend', removeListenerAndRerender);
+        collapseItem(list);
+
+        function removeListenerAndRerender() {
+            list.removeEventListener('transitionend', removeListenerAndRerender);
+            rerenderListsItems();
+        }
     }
 
     function onChangeName(event) {
@@ -163,7 +180,6 @@ function openManageListsMenu() {
     function closeManageListsMenu(event) {
         if (event.target === popupWrapper || event.target === cancelBtn) {
             closeWithAnimation(popupWrapper, 'opening');
-            document.querySelector('.main').classList.remove('noscroll');
         }
     }
 
@@ -183,7 +199,7 @@ function openManageListsMenu() {
         deleteListsFromState();
         sortListsInState();
 
-        popupWrapper.style.display = 'none';
+        closeWithAnimation(popupWrapper, 'opening');
         cancelBtn.removeEventListener('click', closeManageListsMenu);
         acceptBtn.removeEventListener('click', acceptChanges);
         state.writeToLocalStorage();

@@ -54,8 +54,6 @@ function openListOptions(target) {
             if (event.target.classList.contains('good_element__right')) {
                 deleteItem(event);
                 optionsGoods.removeEventListener('click', addControlBtns);
-                temporaryList = sortBoughtItems(temporaryList);
-                rerenderList();
             } else if (event.target.classList.contains('good_element__name')) {
                 editGoodName(event);
             }
@@ -104,9 +102,17 @@ function openListOptions(target) {
     }
 
     function deleteItem(event) {
-        let idToDelete = event.target.closest('.good_element').id;
+        const element = event.target.closest('.good_element');
+        const idToDelete = element.id;
+
         temporaryList = temporaryList.filter(item => '' + item.id !== idToDelete);
-        rerenderList();
+        element.addEventListener('transitionend', removeListenerAndRerender);
+        collapseItem(element);
+
+        function removeListenerAndRerender() {
+            element.removeEventListener('transitionend', removeListenerAndRerender);
+            rerenderList();
+        }
     }
 
     function closeListOptions(event) {
