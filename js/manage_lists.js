@@ -5,23 +5,24 @@ function openManageListsMenu() {
     const cancelBtn = popupWrapper.querySelector('.cancel_btn');
     const acceptBtn = popupWrapper.querySelector('.accept_btn');
     let temporaryList = [];
-    createTemporaryList();
 
     addNewListBtn.addEventListener('click', addNewList);
     popupWrapper.addEventListener('click', closeManageListsMenu);
     acceptBtn.addEventListener('click', acceptChanges);
 
-    openWithAnimation(popupWrapper, 'opening', 'flex');
+    createTemporaryList();
     rerenderListsItems();
+    openWithAnimation(popupWrapper, 'opening', 'flex');
 
     function createTemporaryList() {
+        temporaryList = temporaryList.slice(0,0);
         for (let i = 0; i < state.lists.length; i++) {
-            let nextList = {
+            const nextList = {
                 name: state.lists[i].name,
                 listId: state.lists[i].listId,
                 color: state.lists[i].color,
-            }
-            temporaryList = [...temporaryList, nextList]
+            };
+            temporaryList = [...temporaryList, nextList];
         }
     }
 
@@ -36,20 +37,10 @@ function openManageListsMenu() {
             });
         });
 
+        manageListsItemsElement.onclick = addControlBtns;
         manageListsItemsElement.querySelectorAll('.manage_lists__item__name input').forEach(el => {
             el.addEventListener('input', onChangeName);
         });
-        manageListsItemsElement.addEventListener('click', addControlBtns);
-        
-        function addControlBtns(event) {
-            if (event.target.classList.contains('colored_square')) {
-                changeListColor(event);
-                manageListsItemsElement.removeEventListener('click', addControlBtns);
-            } else if (event.target.classList.contains('manage_lists__item__right') || event.target.classList.contains('cross')) {
-                deleteList(event);
-                manageListsItemsElement.removeEventListener('click', addControlBtns);
-            }
-        }
 
         const dataObj = {
             temporaryList: temporaryList,
@@ -62,35 +53,43 @@ function openManageListsMenu() {
             updateTemporaryList: updateTemporary,
             rerenderFunction: rerenderListsItems
         }
-
         addDragAndDrop(dataObj);
+
+        function returnManageListsItem({name, listId, color}) {
+            return `
+            <li id="${listId}" class="manage_lists__item ${color}">
+                <div class="manage_lists__item__left">
+                    <div class="move_up_down_btn">
+                        <div class="arrow">&#8691</div>
+                    </div>
+                </div>
+                <div class="manage_lists__item__center">
+                    <div class="manage_lists__item__name">
+                        <input value=${name}></input>
+                    </div>
+                    <ul class="manage_lists__item__colors">
+                        ${returnColorsPalette(state.listColors, color)}
+                    </ul>
+                </div>
+                <div class="manage_lists__item__right">
+                     <div class="cross">×</div>
+                </div>
+            </li>
+            `
+        }
+        
+    }
+
+    function addControlBtns(event) {
+        if (event.target.classList.contains('colored_square')) {
+            changeListColor(event);
+        } else if (event.target.classList.contains('manage_lists__item__right') || event.target.classList.contains('cross')) {
+            deleteList(event);
+        }
     }
 
     function updateTemporary(list) {
         temporaryList = [...list];
-    }
-
-    function returnManageListsItem({name, listId, color}) {
-        return `
-        <li id="${listId}" class="manage_lists__item ${color}">
-            <div class="manage_lists__item__left">
-                <div class="move_up_down_btn">
-                    <div class="arrow">&#8691</div>
-                </div>
-            </div>
-            <div class="manage_lists__item__center">
-                <div class="manage_lists__item__name">
-                    <input value=${name}></input>
-                </div>
-                <ul class="manage_lists__item__colors">
-                    ${returnColorsPalette(state.listColors, color)}
-                </ul>
-            </div>
-            <div class="manage_lists__item__right">
-                 <div class="cross">×</div>
-            </div>
-        </li>
-        `
     }
 
     function returnColorsPalette(colors, activeColor) {
@@ -107,9 +106,7 @@ function openManageListsMenu() {
         temporaryList.push({
             name: '',
             listId: idGenerator(),
-            color: state.listColors[0],
-            updated: false,
-            items: []
+            color: state.listColors[0]
         });
         rerenderListsItems();
 
@@ -172,7 +169,6 @@ function openManageListsMenu() {
         });
         const listId = event.target.closest('.manage_lists__item').id;
         const listIndex = temporaryList.findIndex(list => list.listId === listId);
-
         temporaryList[listIndex].color = choosedColor;
         rerenderListsItems();
     }
@@ -185,9 +181,11 @@ function openManageListsMenu() {
 
     function acceptChanges() {
         let newLists = []
+
         temporaryList.forEach(list => {
             const stateIndex = state.lists.findIndex(stateList => stateList.listId === list.listId);
             if (stateIndex === -1) {
+                list.items = [];
                 state.lists.push(list);
                 newLists.push(list.name);
             } else {

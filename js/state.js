@@ -64,17 +64,17 @@ const state = {
     },
 
     writeToLocalStorage() {
-        localStorage.setItem('lists', JSON.stringify(state.lists));
-        localStorage.setItem('options', JSON.stringify(state.options));
+        localStorage.setItem('shopping_lists', JSON.stringify(state.lists));
+        localStorage.setItem('shopping_options', JSON.stringify(state.options));
     },
 
     readFromLocalStorage() {
-        if (localStorage.getItem('lists')) {
-            const lists = JSON.parse(localStorage.getItem('lists'));
+        if (localStorage.getItem('shopping_lists')) {
+            const lists = JSON.parse(localStorage.getItem('shopping_lists'));
             state.lists = [...lists];
         }
-        if (localStorage.getItem('options')) {
-            const options = JSON.parse(localStorage.getItem('options'));
+        if (localStorage.getItem('shopping_options')) {
+            const options = JSON.parse(localStorage.getItem('shopping_options'));
             state.options = {...options};
         }
     }

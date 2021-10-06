@@ -48,12 +48,11 @@ function openListOptions(target) {
             </ul>
         `;
 
-        optionsGoods.addEventListener('click', addControlBtns);
+        optionsGoods.onclick = addControlBtns;
 
         function addControlBtns(event) {
             if (event.target.classList.contains('good_element__right')) {
                 deleteItem(event);
-                optionsGoods.removeEventListener('click', addControlBtns);
             } else if (event.target.classList.contains('good_element__name')) {
                 editGoodName(event);
             }

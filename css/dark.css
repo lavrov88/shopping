@@ -25,6 +25,41 @@ body.dark .header_menu__button {
     color: #d5dbe4;
 }
 
+/* DARK SPINNER */
+
+@keyframes Spinner {
+    0% {
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+         border-left-color: transparent;
+    }
+    25% {
+        border-top-color: #c7c7c7;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+         border-left-color: transparent;
+    }
+    50% {
+        border-top-color: #c7c7c7;
+        border-right-color: #c7c7c7;
+        border-bottom-color: transparent;
+         border-left-color: transparent;
+    }
+    75% {
+        border-top-color: #c7c7c7;
+        border-right-color: #c7c7c7;
+        border-bottom-color: #c7c7c7;
+         border-left-color: transparent;
+    }
+    100% {
+        border-top-color: #c7c7c7;
+        border-right-color: #c7c7c7;
+        border-bottom-color: #c7c7c7;
+         border-left-color: #c7c7c7;
+    }
+}
+
 body.dark .category_items {
     background-color: #0000001f;
 }
