@@ -10,6 +10,7 @@
         height: 100vh;
         border-radius: 0px;
         position: relative;
+        border: none;
     }
 
     .header {
@@ -91,9 +92,6 @@
 
     .category_header_name {
         font-size: 18px;
-    }
-    .category_header_menu_button {
-        font-size: 22px;
     }
 
     .good_element:hover {

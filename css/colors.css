@@ -1,12 +1,17 @@
 /* COLORS FOR CATEGORIES */
 
-.category_item.orange {
-    border-color: #ffc187;
+.category_item .good_element.bought,
+.good_element.edit.bought {
+   color: #5c5c5c;
 }
-.category_item.orange .category_header,
+
+.category_item.orange {
+    border-color: #ee7300;
+}
 .category_item.orange .good_element.bought,
-.good_element.edit.orange.bought {
-    background-color: #ffc187;
+.good_element.edit.orange.bought,
+.category_item.orange.minimized .items_amount {
+    background-color: #ff7b008e;
 }
 .category_item.orange .good_element,
 .manage_lists__item.orange,
@@ -14,20 +19,30 @@
 .colored_square.orange {
     background-color: #ff7b00;
 }
+.category_item.orange .category_header_name,
+.category_item.orange .category_header_minimize,
+.category_item.orange .category_header_menu_button {
+   color: #ee7300;
+}
 
 .category_item.green {
-    border-color: #91ff87;
+    border-color: #0d9700;
 }
-.category_item.green .category_header,
 .category_item.green .good_element.bought,
-.good_element.edit.green.bought {
-    background-color: #91ff87;
+.good_element.edit.green.bought,
+.category_item.green.minimized .items_amount {
+    background-color: #6eff60;
 }
 .category_item.green .good_element,
 .manage_lists__item.green,
 .good_element.edit.green,
 .colored_square.green {
-    background-color: #15c505;
+    background-color: #0d9700;
+}
+.category_item.green .category_header_name,
+.category_item.green .category_header_minimize,
+.category_item.green .category_header_menu_button {
+   color: #0d9700;
 }
 
 .category_item.blue .good_element,
@@ -36,10 +51,13 @@
 .colored_square.blue {
     background-color: #4f6c97;
 }
-.category_item.blue .category_header,
 .category_item.blue .good_element.bought,
-.good_element.edit.blue.bought {
+.good_element.edit.blue.bought,
+.category_item.blue.minimized .items_amount  {
     background-color: #7db1ff;
+}
+.category_item.blue .category_header_menu_button {
+   color: #4f6c97;
 }
 
 .category_item.purple .good_element,
@@ -48,13 +66,18 @@
 .colored_square.purple {
     background-color: #800080;
 }
-.category_item.purple .category_header,
 .category_item.purple .good_element.bought,
-.good_element.edit.purple.bought {
+.good_element.edit.purple.bought,
+.category_item.purple.minimized .items_amount {
     background-color: #be8dbe;
 }
 .category_item.purple {
-    border-color: #be8dbe;
+    border-color: #800080;
+}
+.category_item.purple .category_header_name,
+.category_item.purple .category_header_minimize,
+.category_item.purple .category_header_menu_button {
+   color: #800080;
 }
 
 .category_item.red .good_element,
@@ -63,33 +86,43 @@
 .colored_square.red {
     background-color: #eb0000;
 }
-.category_item.red .category_header,
 .category_item.red .good_element.bought,
-.good_element.edit.red.bought {
+.good_element.edit.red.bought,
+.category_item.red.minimized .items_amount {
     background-color: #f05e5e;
 }
 .category_item.red {
-    border-color: #f05e5e;
+    border-color: #eb0000;
+}
+.category_item.red .category_header_name,
+.category_item.red .category_header_minimize,
+.category_item.red .category_header_menu_button {
+   color: #eb0000;
 }
 
 .category_item.yellow .good_element,
 .manage_lists__item.yellow,
 .good_element.edit.yellow,
 .colored_square.yellow {
-    background-color: #e7d000;
-    color: #000;
-}
-.category_item.yellow .category_header {
-    background-color: #ffee55;
+    background-color: #e7bd00;
     color: #000;
 }
 .category_item.yellow .good_element.bought,
-.good_element.edit.yellow.bought {
+.good_element.edit.yellow.bought,
+.category_item.yellow.minimized .items_amount {
     background-color: #ffee55;
     color: #7e7e7e;
 }
+.category_item.yellow.minimized .items_amount {
+   color: #000;
+}
 .category_item.yellow {
-    border-color: #ffee55;
+    border-color: #976f00;
+}
+.category_item.yellow .category_header_name,
+.category_item.yellow .category_header_minimize,
+.category_item.yellow .category_header_menu_button {
+   color: #976f00;
 }
 
 /* ADD GOODS BUTTONS COLORS */
