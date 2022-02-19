@@ -118,6 +118,10 @@ body.dark .add_goods_popup_header {
     color: #c9c9c9;
 }
 
+body.dark .add_goods_popup_header_text {
+   color: #999999;
+}
+
 body.dark #new_goods_textarea {
     background-color: #696969;
     color: #ffffff;

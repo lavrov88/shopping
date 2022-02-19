@@ -392,7 +392,7 @@ ul {
     font-weight: 800;
     color: #fff;
     background-color: #3a3e4b;
-    box-shadow: 0px 2px 5px 1px #3d3d3d;
+    box-shadow: 0px 2px 2px 1px #3d3d3d79;
     cursor: pointer;
 }
 .add_goods_btn:hover {
@@ -467,9 +467,10 @@ ul {
     margin-bottom: 5px;
 }
 
-.add_goods_popup_header_left {
+.add_goods_popup_header_text {
     padding-left: 5px;
-    font-size: 11px;
+    font-size: 12px;
+    color: #5e5e5e;
 }
 
 .add_goods_input {
@@ -502,10 +503,11 @@ ul {
 
 .add_goods_input__clear_btn_wrapper {
     position: absolute;
-    top: 13px;
+    top: 45%;
     right: 7px;
     height: 30px;
     width: 30px;
+    transform: translateY(-50%);
 }
 
 .add_goods_input__clear_btn {
