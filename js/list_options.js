@@ -25,6 +25,7 @@ function openListOptions(target) {
     function rerenderList() {
         htmlItems = '';
         temporaryList.forEach(good => {
+           debugger
             htmlItems += `
                 <li id=${good.id} class="good_element edit${good.bought ? ' bought' : ''} ${state.lists[listIndex].color}">
                     <div class="good_element__left">
@@ -34,7 +35,7 @@ function openListOptions(target) {
                     </div>
                     <div class="good_element__center">
                         <div class="good_element__name">${good.name}</div>
-                        <input class="good_element__name_input" value=${good.name}></input>
+                        <input class="good_element__name_input" value="${good.name}"></input>
                     </div>
                     <div class="good_element__right">&#215</div>
                 </li>
