@@ -65,7 +65,7 @@ function openManageListsMenu() {
                 </div>
                 <div class="manage_lists__item__center">
                     <div class="manage_lists__item__name">
-                        <input value=${name}></input>
+                        <input value="${name}"></input>
                     </div>
                     <ul class="manage_lists__item__colors">
                         ${returnColorsPalette(state.listColors, color)}
